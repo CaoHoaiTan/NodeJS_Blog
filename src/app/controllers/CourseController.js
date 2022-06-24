@@ -3,6 +3,7 @@ const {
   multipleMongooseToObject,
   MongooseToObject,
 } = require('../../util/mongooes');
+const { json } = require('express');
 class CourseController {
   // [GET] /show
   show(req, res, next) {
@@ -28,6 +29,24 @@ class CourseController {
       .save()
       .then(() => res.redirect('/'))
       .catch((err) => {});
+  }
+
+  //[GET] /courses/:id/edit
+  edit(req, res, next) {
+    Course.findById(req.params.id)
+      .then((course) => {
+        course = MongooseToObject(course);
+        res.render('courses/edit', { course });
+      })
+      .catch(next);
+  }
+
+  // [PUT] /courses/:inde
+
+  update(req, res, next) {
+    Course.updateOne({ _id: req.params.id }, req.body)
+      .then(() => res.redirect('/me/stored/courses'))
+      .catch(next);
   }
 }
 

@@ -13,6 +13,9 @@ const db = require('./config/db/index');
 // connect to DB
 db.connect();
 
+//convert Post to PUT method
+const methodOverride = require('method-override');
+
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,11 +31,16 @@ app.use(express.json());
 // HTTP logger
 // app.use(morgan('combined'))
 
+app.use(methodOverride('_method'));
+
 // Template engine
 app.engine(
   'hbs',
   engine({
     extname: '.hbs',
+    helpers: {
+      sum: (a, b) => a + b,
+    },
   }),
 );
 app.set('view engine', 'hbs');
