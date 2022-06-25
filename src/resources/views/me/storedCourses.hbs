@@ -17,7 +17,7 @@
           <option value="delete">Xóa</option>
         </select>
 
-        <Button class="btn btn-primary btn-check-all-submit btn-sm disabled">Thực hiện</Button>
+        <Button class="btn btn-primary btn-check-all-submit btn-sm" disabled>Thực hiện</Button>
     </div>
     
 </div>
@@ -92,7 +92,7 @@
         var courseItemCheckbox = $('input[name="courseIds[]"]');
         var checkallSubmitButton = $('.btn-check-all-submit');
 
-        var containerForm = document.forms['container-form'];
+        var containerForm = $('form[name="container-form"]');
 
         // When dialog confirm clicked
         $('#delete-course-modal').on('show.bs.modal', function (event) {
@@ -120,20 +120,13 @@
             renderCheckAllSubmitBtn();
         })
 
-        checkallSubmitButton.on('submit', function(e){
-           var isSubmitable = !$(this).hasClass('disabled');
-           if(!isSubmitable) {
-            e.preventDefault();
-          }
-        })
-
         //Re - renderCheckAllSubmitBtn
         function renderCheckAllSubmitBtn() {
           var checkedCount = $('input[name="courseIds[]"]:checked').length;
           if(checkedCount > 0) {
-              checkallSubmitButton.removeClass('disabled');
+              checkallSubmitButton.removeAttr('disabled');
           }else {
-            checkallSubmitButton.addClass('disabled');
+            checkallSubmitButton.attr('disabled',true);
           }
         }
     });
